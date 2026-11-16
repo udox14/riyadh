@@ -1,0 +1,1 @@
+Hasil syarah per bab: bab-001.json, bab-002.json, ... (format di PANDUAN.md §4)

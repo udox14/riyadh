@@ -1,0 +1,289 @@
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Riyadhus Shalihin</title><meta name="kitabuna-adapter" content="taqrib"><meta name="description" content="Riyadhus Shalihin karya Imam an-Nawawi: matan hadits, ayat-ayat bab, takhrij dan catatan tahqiq Dr. Mahir Yasin al-Fahl. Terjemah dan syarah ditambahkan bertahap.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Scheherazade+New:wght@400;700&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;0,7..72,700;1,7..72,400&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+{{STYLE}}
+</style>
+</head><body><nav class="nav" id="nav" aria-label="Daftar isi">
+  <div class="nav-head">
+    <div class="brand-row">
+      <button class="icon-btn home-btn" id="homeBtn" title="Kembali ke Maktabah" aria-label="Kembali ke Maktabah" hidden>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10l9-7 9 7v10a2 2 0 0 1-2 2h-4v-7H9v7H5a2 2 0 0 1-2-2z"/></svg>
+      </button>
+      <div class="brand-ar" lang="ar">رِيَاضُ الصَّالِحِينَ</div>
+      <button class="icon-btn close-nav" id="closeNav" aria-label="Tutup daftar isi">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <p class="brand-lat">Riyadhus Shalihin</p>
+    <p class="brand-sub">Imam an-Nawawi · matan, takhrij, dan syarah bertahap</p>
+    <div class="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="Cari nomor hadits, kata Arab, atau istilah" aria-label="Cari di seluruh kitab" autocomplete="off">
+    </div>
+    <div class="filters" role="group" aria-label="Tampilkan bagian" id="filters">
+      <span class="filters-label">Tampilkan</span>
+    </div>
+  </div>
+  <div class="toc" id="toc"><div class="hits" id="hits"></div></div>
+</nav>
+<div class="scrim" id="scrim"></div>
+
+<div class="main">
+  <header class="topbar">
+    <div class="topbar-in">
+      <button class="icon-btn menu-btn" id="menuBtn" aria-label="Buka daftar isi">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <div class="crumb" id="crumb"></div>
+      <div class="tools">
+        <button class="icon-btn" id="fsDown" aria-label="Perkecil huruf" title="Perkecil huruf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 18l5-12 5 12M5.8 14h6.4M17 12h5"/></svg></button>
+        <button class="icon-btn" id="fsUp" aria-label="Perbesar huruf" title="Perbesar huruf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 18l5-12 5 12M4.8 14h6.4M19.5 9.5v5M17 12h5"/></svg></button>
+        <button class="icon-btn" id="themeBtn" aria-label="Ganti tema terang/gelap" title="Ganti tema"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+      </div>
+    </div>
+    <div class="progress"><span id="bar"></span></div>
+  </header>
+  <div class="wrap"><div id="view"></div></div>
+  <div class="foot">Riyadhus Shalihin min Kalam Sayyid al-Mursalin karya Imam Abu Zakariya Yahya bin Syaraf an-Nawawi (w. 676 H). Teks matan, penomoran hadits, nomor halaman, takhrij, dan catatan kaki mengikuti tahqiq Dr. Mahir Yasin al-Fahl (Dar Ibn Katsir, cet. I, 1428 H) melalui al-Maktabah asy-Syamilah; harakat mengikuti naskah tersebut. Terjemah dan syarah ditambahkan bertahap dengan merujuk Dalil al-Falihin karya Ibnu 'Allan dan kitab-kitab syarah lainnya. Buku ini alat bantu, bukan pengganti talaqqi kepada guru.</div>
+</div>
+
+<div class="dock">
+  <div class="dock-in">
+    <button class="navbtn prev" id="prevBtn" aria-label="Sebelumnya"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg><span id="prevT"></span></button>
+    <div class="pos" id="pos"></div>
+    <button class="navbtn next" id="nextBtn" aria-label="Selanjutnya"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg><span id="nextT"></span></button>
+  </div>
+</div>
+
+<script>
+/* KITAB: daftar kitab. DATA: satu entri per bab (bn 0 = muqaddimah).
+   Unit bab (s[]): t = 'm' muqaddimah | 'a' ayat & pengantar bab | 'h' hadits | 'x' penutup.
+   Isian dasar: mt (matan Arab), fn (catatan al-Fahl: k 'tk' takhrij / 'ta' tahqiq), pg (halaman cetakan).
+   Isian hadits: no, tar (cuplikan Arab), rw (rawi), src (atribusi an-Nawawi), tc (rujukan takhrij).
+   Isian syarah (diisi bertahap): title, tier (A/B/C), tr (terjemah), nq, mf+mfn, rp (profil rawi), sb, ex, is, nt; bab: intro, ks. */
+const KITAB={{KITAB}};
+const DATA={{DATA}};
+(function(){
+const $=id=>document.getElementById(id);
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const strip=h=>String(h||'').replace(/<sup[^>]*>.*?<\/sup>/g,'').replace(/<[^>]+>/g,' ').replace(/\s+/g,' ');
+const SK='riyadh-';
+const keyOf=(b,s)=>s.t==='h'?'h'+s.no:s.t==='a'?'a'+b.bn:s.t==='m'?'muqaddimah':'penutup';
+
+// ---------- unit ----------
+// t: 'k' halaman kitab, 'b' halaman bab, 's' pembahasan
+const UNITS=[],KEYIDX={},HNO={};
+let lastKt=-1;
+DATA.forEach((b,bi)=>{
+  if(b.bn>0&&b.kt!==lastKt){UNITS.push({t:'k',kt:b.kt,key:'k'+b.kt});lastKt=b.kt;}
+  if(b.bn>0)UNITS.push({t:'b',b:bi,key:'b'+b.bn});
+  b.s.forEach((s,si)=>{
+    const key=keyOf(b,s);
+    UNITS.push({t:'s',b:bi,s:si,key});
+    if(s.t==='h')HNO[s.no]=UNITS.length-1;
+  });
+});
+UNITS.forEach((u,i)=>KEYIDX[u.key]=i);
+const BABS_OF={};DATA.forEach((b,bi)=>{if(b.bn>0)(BABS_OF[b.kt]=BABS_OF[b.kt]||[]).push(bi);});
+const nH=b=>b.s.filter(s=>s.t==='h').length;
+const hasSyarah=s=>!!(s.tr||s.ex);
+function sLabel(s,b){return s.t==='h'?'Hadits '+s.no:s.t==='a'?(/﴿/.test(s.mt)?'Ayat-ayat Bab':'Pengantar Bab'):s.t==='m'?'Muqaddimah':'Penutup';}
+function sTitle(s,b){return s.title||(s.t==='h'?'Hadits nomor '+s.no:s.t==='a'?(/﴿/.test(s.mt)?'Ayat-ayat pembuka Bab '+b.bn:'Pengantar Bab '+b.bn):s.t==='m'?"Muqaddimah Imam an-Nawawi":'Penutup Kitab');}
+function unitName(u){if(!u)return'';if(u.t==='k')return KITAB[u.kt].id;if(u.t==='b')return 'Bab '+DATA[u.b].bn;const b=DATA[u.b],s=b.s[u.s];return s.t==='h'?'Hadits '+s.no:sTitle(s,b);}
+
+// ---------- TOC ----------
+const toc=$('toc'),hitsEl=$('hits');
+const chev='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>';
+function sItem(b,bi,s,si){
+  const key=keyOf(b,s);
+  const lab=s.t==='h'?s.no:s.t==='a'?'Ayat':s.t==='m'?'Muq.':'Akhir';
+  const txt=s.title?`<span>${esc(s.title)}</span>`:(s.t==='h'?`<span class="tar" lang="ar">${esc(s.tar)}</span>`:`<span>${esc(sTitle(s,b))}</span>`);
+  return `<li><a href="#${key}" data-key="${key}"><span class="sl">${lab}</span>${txt}${s.t==='h'?`<span class="pd${hasSyarah(s)?' ok':''}" title="${hasSyarah(s)?'Syarah tersedia':'Syarah menyusul'}"></span>`:''}</a></li>`;
+}
+let th='';
+// muqaddimah (bn 0)
+DATA.filter(b=>b.bn===0).forEach(b=>{
+  th+=`<div class="kit" id="kit-m"><div class="kit-h"><a href="#muqaddimah" data-key="muqaddimah"><span class="kar" lang="ar">${esc(KITAB[0].ar)}</span><span class="kid">${esc(KITAB[0].id)}</span></a></div></div>`;
+});
+KITAB.forEach((k,kt)=>{
+  const bl=BABS_OF[kt];if(!bl)return;
+  const nh=bl.reduce((a,bi)=>a+nH(DATA[bi]),0);
+  th+=`<div class="kit" id="kit${kt}"><div class="kit-h"><a href="#k${kt}" data-key="k${kt}"><span class="kar" lang="ar">${esc(k.ar)}</span><span class="kid">${esc(k.id)}</span><span class="kn">Bab ${DATA[bl[0]].bn}${bl.length>1?'–'+DATA[bl[bl.length-1]].bn:''} · ${nh} hadits</span></a><button class="ktog" aria-label="Buka-tutup ${esc(k.id)}" data-kit="${kt}">${chev}</button></div><div class="kit-b" data-kt="${kt}"></div></div>`;
+});
+toc.insertAdjacentHTML('beforeend',th);
+// isi bab dibangun saat kitab dibuka (hemat DOM)
+const built={};
+function buildKit(kt){
+  if(built[kt])return;built[kt]=1;
+  const box=toc.querySelector(`.kit-b[data-kt="${kt}"]`);if(!box)return;
+  box.innerHTML=BABS_OF[kt].map(bi=>{const b=DATA[bi];
+    return `<div class="kgroup" id="kg${bi}"><div class="khead"><a href="#b${b.bn}" data-key="b${b.bn}"><span class="kar" lang="ar">${esc(b.ar)}</span><span class="kid">Bab ${b.bn}${b.id?' · '+esc(b.id):''}</span><span class="kn">${nH(b)?nH(b)+' hadits':'ayat saja'}</span></a><button class="ktog" aria-label="Buka-tutup Bab ${b.bn}" data-k="${bi}">${chev}</button></div><ul class="slist">${b.s.map((s,si)=>sItem(b,bi,s,si)).join('')}</ul></div>`;}).join('');
+}
+function openKit(kt){const el=$('kit'+kt);if(!el)return;buildKit(kt);el.classList.add('open');}
+toc.addEventListener('click',e=>{
+  const t=e.target.closest('.ktog');
+  if(t){if(t.dataset.kit!=null){const el=$('kit'+t.dataset.kit);buildKit(+t.dataset.kit);el.classList.toggle('open');}else{$('kg'+t.dataset.k).classList.toggle('open');}return;}
+  const a=e.target.closest('a[data-key]');
+  if(a){e.preventDefault();go(KEYIDX[a.dataset.key]);closeNav();}
+});
+
+// ---------- filter ----------
+const FDEF=[['ar','Teks Arab',s=>s.mt],['tr','Terjemah',s=>s.tr],['tk','Takhrij',s=>s.fn&&s.fn.some(n=>n.k==='tk')],['ta','Catatan Tahqiq',s=>s.fn&&s.fn.some(n=>n.k==='ta')],['mf','Kosakata',s=>s.mf],['ex','Penjelasan',s=>s.ex],['nt','Miskonsepsi',s=>s.nt]];
+const ALL=[];DATA.forEach(b=>b.s.forEach(s=>ALL.push(s)));
+const F=FDEF.filter(f=>ALL.some(f[2])).map(f=>f[0]);
+$('filters').insertAdjacentHTML('beforeend',FDEF.filter(f=>F.includes(f[0])).map(f=>`<button class="chip" data-f="${f[0]}" aria-pressed="true">${f[1]}</button>`).join(''));
+let filt={};try{filt=JSON.parse(store.get(SK+'filter')||'{}')}catch(e){filt={}}
+function applyFilt(){F.forEach(f=>{const on=filt[f]!==false;document.body.classList.toggle('hide-'+f,!on);document.querySelector(`.chip[data-f="${f}"]`).setAttribute('aria-pressed',on);});}
+document.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{const f=c.dataset.f;filt[f]=filt[f]===false;store.set(SK+'filter',JSON.stringify(filt));applyFilt();}));
+applyFilt();
+
+// ---------- skala & tema ----------
+let scale=parseFloat(store.get(SK+'scale')||'1');if(!(scale>=.85&&scale<=1.4))scale=1;
+function applyScale(){document.documentElement.style.setProperty('--scale',scale);}
+$('fsUp').onclick=()=>{scale=Math.min(1.4,+(scale+.08).toFixed(2));store.set(SK+'scale',scale);applyScale();};
+$('fsDown').onclick=()=>{scale=Math.max(.85,+(scale-.08).toFixed(2));store.set(SK+'scale',scale);applyScale();};
+applyScale();
+const savedTheme=store.get(SK+'theme');if(savedTheme==='light'||savedTheme==='dark')document.documentElement.dataset.theme=savedTheme;
+$('themeBtn').onclick=()=>{const cur=document.documentElement.dataset.theme||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');const nx=cur==='dark'?'light':'dark';document.documentElement.dataset.theme=nx;store.set(SK+'theme',nx);};
+
+// ---------- render ----------
+const view=$('view');let cur=0;
+const part=(cls,label,html)=>`<section class="part ${cls}"><h2 class="part-h">${label}</h2>${html}</section>`;
+const pr=(cls,lab,v)=>v?part(cls,lab,`<div class="prose">${v}</div>`):'';
+const clock='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
+function notes(fn,kind){
+  const L=(fn||[]).filter(n=>n.k===kind);if(!L.length)return'';
+  return `<div class="fnbox"><ol class="fnl" lang="ar">${L.map(n=>`<li id="fn${n.n}"><span class="n">${n.n}</span><div>${n.h}</div></li>`).join('')}</ol></div>`;
+}
+function kitName(kt){return KITAB[kt]?KITAB[kt].id:'';}
+function render(i,push){
+  cur=Math.max(0,Math.min(UNITS.length-1,i));
+  const u=UNITS[cur];let h='',crumb='';
+  if(u.t==='k'){
+    const k=KITAB[u.kt],bl=BABS_OF[u.kt],nh=bl.reduce((a,bi)=>a+nH(DATA[bi]),0);
+    h=`<article class="page"><p class="eyebrow">Kitab</p><p class="babttl" lang="ar">${esc(k.ar)}</p><h1 class="ttl">${esc(k.id)}</h1>`+
+      `<div class="stat"><span>${bl.length} bab</span><span>${nh} hadits</span><span>Bab ${DATA[bl[0]].bn}${bl.length>1?'–'+DATA[bl[bl.length-1]].bn:''}</span></div>`+
+      (u.kt===1?`<div class="pending">${clock}<div>Imam an-Nawawi tidak memberi judul kitab untuk bab-bab awal ini; judul <b>al-Muqaddimat</b> dipakai para pensyarah. Penomoran kitab dalam cetakan al-Fahl dimulai dari Kitab al-Adab.</div></div>`:'')+
+      `<section class="part"><h2 class="part-h">Daftar bab</h2><ul class="secgrid babs">`+
+      bl.map(bi=>{const b=DATA[bi];return `<li><a href="#b${b.bn}" data-key="b${b.bn}"><span class="sl">${b.bn}</span>${b.id?`<span>${esc(b.id)}</span>`:''}<span class="tar" lang="ar">${esc(b.ar)}</span><span class="cnt">${nH(b)||'–'}</span></a></li>`;}).join('')+`</ul></section></article>`;
+    crumb=`<b>${esc(k.id)}</b>`;
+  }else if(u.t==='b'){
+    const b=DATA[u.b];
+    h=`<article class="page"><p class="eyebrow">${esc(kitName(b.kt))} · Bab ${b.bn}</p><p class="babttl" lang="ar">${esc(b.ar)}</p>`+(b.id?`<h1 class="ttl">${esc(b.id)}</h1>`:'')+
+      `<div class="stat"><span>${nH(b)} hadits</span>${b.s.some(s=>s.t==='a')?'<span>dengan ayat pembuka</span>':''}${b.pg?`<span>Cet. al-Fahl, hlm. ${b.pg}</span>`:''}</div>`+
+      (b.tfn&&b.tfn.length?part('p-ta','Catatan Tahqiq pada Judul Bab',`<div class="fnbox"><ol class="fnl" lang="ar">${b.tfn.map((t,i)=>`<li><span class="n">${i+1}</span><div>${t}</div></li>`).join('')}</ol></div>`):'')+
+      (b.intro?pr('p-ex','Pengantar Bab',b.intro):`<div class="pending">${clock}<div><b>Pengantar bab menyusul.</b> Makna judul bab, alasan penyusunannya oleh an-Nawawi, dan peta isi bab akan ditambahkan bersama syarah.</div></div>`)+
+      `<section class="part"><h2 class="part-h">Isi bab</h2><ul class="secgrid babs">`+
+      b.s.map(s=>{const key=keyOf(b,s);return `<li><a href="#${key}" data-key="${key}"><span class="sl">${s.t==='h'?s.no:s.t==='a'?'Ayat':'Akhir'}</span>${s.t==='h'?(s.title?`<span>${esc(s.title)}</span>`:`<span class="tar" lang="ar">${esc(s.tar)}</span>`):`<span>${esc(sTitle(s,b))}</span>`}</a></li>`;}).join('')+`</ul></section>`+
+      pr('p-ex p-ks','Kesimpulan Bab',b.ks)+`</article>`;
+    crumb=`<b>${esc(kitName(b.kt))}</b> · Bab ${b.bn}`;
+  }else{
+    const b=DATA[u.b],s=b.s[u.s];
+    const ey=b.bn>0?`${esc(kitName(b.kt))} · Bab ${b.bn} · ${esc(sLabel(s,b))}`:esc(sLabel(s,b));
+    let meta='';
+    if(s.t==='h'){
+      meta=`<div class="meta">`+(s.rw?`<span class="b-rw" lang="ar" title="Perawi dari kalangan sahabat">${esc(s.rw)}</span>`:'')+
+        (s.src||[]).map(x=>`<span class="b-attr" title="Keterangan an-Nawawi dalam matan">${esc(x)}</span>`).join('')+
+        (s.tc||[]).map(x=>x[0]==='x'?(HNO[x[1]]!=null?`<a class="b-x" href="#h${x[1]}" data-key="h${x[1]}">Lihat hadits ${esc(x[1])}</a>`:''):`<span class="b-tk" title="Takhrij al-Fahl">${esc(x[0])} ${esc(x[1])}</span>`).join('')+
+        (s.pg?`<span>Hlm. ${s.pg}</span>`:'')+`</div>`;
+    }else if(s.pg){meta=`<div class="meta"><span>Cet. al-Fahl, hlm. ${s.pg}</span></div>`;}
+    const kind=s.t==='h'?'hadits':'ayatbab';
+    h=`<article class="page"><p class="eyebrow">${ey}</p>`+(s.t==='h'&&s.tar?`<p class="ttl-ar" lang="ar">${esc(s.tar)}</p>`:'')+`<h1 class="ttl">${esc(sTitle(s,b))}</h1>`+meta+
+      part('p-ar',s.t==='h'?'Matan Hadits':s.t==='a'?'Teks Bab':'Teks',`<div class="matan ${kind}" lang="ar" dir="rtl">${s.mt}</div>`)+
+      (s.tr?part('p-tr','Terjemah',`<div class="prose tr">${s.tr}</div>`):'')+
+      (s.nq?`<aside class="naskah p-tr"><b>Catatan naskah</b>${s.nq}</aside>`:'')+
+      (s.fn&&s.fn.some(n=>n.k==='tk')?part('p-tk','Takhrij',notes(s.fn,'tk')+`<p class="fnsrc">Takhrij Dr. Mahir Yasin al-Fahl. Angka dalam kurung adalah nomor hadits.</p>`):'')+
+      (s.fn&&s.fn.some(n=>n.k==='ta')?part('p-ta','Catatan Tahqiq',notes(s.fn,'ta')):'')+
+      (s.mf?part('p-mf','Kosakata',`<details class="mfd" open><summary><span>Kosakata penting</span><small>${s.mfn||''} lafaz</small></summary><div class="tbl mft">${s.mf}</div></details>`):'')+
+      pr('p-ex p-rp','Profil Perawi',s.rp)+
+      pr('p-ex p-sb','Sabab Wurud dan Munasabah',s.sb)+
+      pr('p-ex','Penjelasan',s.ex)+
+      pr('p-ex p-is','Fawaid dan Penerapan Masa Kini',s.is)+
+      (s.nt?part('p-nt','Miskonsepsi dan Pelurusannya',`<div class="notes prose">${s.nt}</div>`):'')+
+      (!s.tr&&!s.ex&&s.t!=='m'&&s.t!=='x'?`<div class="pending">${clock}<div><b>Terjemah dan syarah menyusul.</b> Halaman ini baru memuat matan dan catatan tahqiq.</div></div>`:'')+
+      `<p class="allhidden">Semua bagian sedang disembunyikan. Aktifkan salah satu pilihan "Tampilkan" di daftar isi.</p></article>`;
+    crumb=b.bn>0?`<b>Bab ${b.bn}</b> · ${esc(unitName(u))}`:`<b>${esc(sLabel(s,b))}</b>`;
+  }
+  view.innerHTML=h;$('crumb').innerHTML=crumb;
+  view.querySelectorAll('a[data-key]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();go(KEYIDX[a.dataset.key]);}));
+  view.querySelectorAll('sup.fn').forEach(x=>x.addEventListener('click',()=>{const li=$('fn'+x.textContent.trim());if(li){li.scrollIntoView({behavior:'smooth',block:'center'});li.classList.add('flash');setTimeout(()=>li.classList.remove('flash'),1400);}}));
+  const pv=UNITS[cur-1],nx=UNITS[cur+1];
+  $('prevBtn').disabled=!pv;$('nextBtn').disabled=!nx;$('prevT').textContent=unitName(pv);$('nextT').textContent=unitName(nx);
+  $('pos').textContent=(cur+1)+' / '+UNITS.length;$('bar').style.width=((cur+1)/UNITS.length*100)+'%';
+  // status daftar isi
+  toc.querySelectorAll('.cur').forEach(a=>a.classList.remove('cur'));
+  const kt=u.t==='k'?u.kt:DATA[u.b].bn>0?DATA[u.b].kt:null;
+  if(kt!=null)openKit(kt);
+  if(u.b!=null){const g=$('kg'+u.b);if(g)g.classList.add('open');}
+  const link=toc.querySelector(`a[data-key="${u.key}"]`);
+  if(link){link.classList.add('cur');const r=link.getBoundingClientRect(),tr=toc.getBoundingClientRect();if(r.top<tr.top+40||r.bottom>tr.bottom-20)toc.scrollTop+=r.top-tr.top-tr.height/3;}
+  if(push!==false){try{history.replaceState(null,'','#'+u.key)}catch(e){location.hash=u.key}}
+  store.set(SK+'pos',u.key);window.scrollTo(0,0);
+  document.title=unitName(u)+' · Riyadhus Shalihin';
+}
+function go(i){if(i==null||isNaN(i))return;render(i);}
+$('prevBtn').onclick=()=>go(cur-1);$('nextBtn').onclick=()=>go(cur+1);
+
+// ---------- laci navigasi ----------
+function openNav(){document.body.classList.add('nav-open');}
+function closeNav(){document.body.classList.remove('nav-open');}
+$('menuBtn').onclick=openNav;$('closeNav').onclick=closeNav;$('scrim').onclick=closeNav;
+
+// ---------- pencarian ----------
+const NORM=s=>s.toLowerCase().normalize('NFD').replace(/[̀-ًͯ-ٰٟـ]/g,'').replace(/[أإآٱ]/g,'ا').replace(/ى/g,'ي').replace(/[’‘`]/g,"'");
+const IDX=[];
+UNITS.forEach((u,i)=>{
+  if(u.t==='k')IDX.push([i,KITAB[u.kt].id+' '+KITAB[u.kt].ar]);
+  else if(u.t==='b'){const b=DATA[u.b];IDX.push([i,'Bab '+b.bn+' '+strip(b.ar)+' '+(b.id||'')+' '+strip(b.intro)+' '+strip(b.ks)+' '+(b.tfn||[]).map(strip).join(' ')]);}
+  else{const s=DATA[u.b].s[u.s];IDX.push([i,[s.title||'',strip(s.mt),...(s.fn||[]).map(n=>strip(n.h)),...['tr','mf','rp','sb','ex','is','nt'].map(f=>strip(s[f]))].join(' ')]);}
+});
+const IDXN=IDX.map(r=>[r[0],r[1],NORM(r[1])]);
+const AR=/[؀-ۿ]/;
+let qt;$('q').addEventListener('input',e=>{clearTimeout(qt);qt=setTimeout(()=>search(e.target.value),160);});
+function search(v){
+  v=v.trim();const q=NORM(v);
+  if(q.length<1||(q.length<2&&!/^\d+$/.test(q))){toc.classList.remove('searching');hitsEl.innerHTML='';return;}
+  toc.classList.add('searching');
+  let top='';
+  if(/^\d+$/.test(q)){const n=+q;if(HNO[n]!=null){const s=DATA[UNITS[HNO[n]].b].s[UNITS[HNO[n]].s];top=`<a class="hit" href="#h${n}" data-key="h${n}"><b>Hadits nomor ${n}</b><small class="ar" lang="ar">${esc(s.tar)}</small></a>`;}
+    if(DATA[n]&&n>0)top+=`<a class="hit" href="#b${n}" data-key="b${n}"><b>Bab ${n}</b><small class="ar" lang="ar">${esc(DATA[n].ar)}</small></a>`;}
+  const out=[];
+  if(q.length>=2)for(const [ui,txt,n] of IDXN){
+    const p=n.indexOf(q);if(p<0)continue;
+    let c=0,x=p;while(x>=0&&c<50){c++;x=n.indexOf(q,x+q.length);}
+    const a=Math.max(0,p-50),bb=Math.min(txt.length,p+q.length+70);
+    const snip=(a>0?'…':'')+esc(txt.slice(a,p))+'<mark>'+esc(txt.slice(p,p+q.length))+'</mark>'+esc(txt.slice(p+q.length,bb))+(bb<txt.length?'…':'');
+    const u=UNITS[ui];
+    out.push({c,html:`<a class="hit" href="#${u.key}" data-key="${u.key}"><b>${esc(unitName(u))}${u.t==='s'&&DATA[u.b].bn>0?' · Bab '+DATA[u.b].bn:''}</b><small${AR.test(v)?' class="ar" lang="ar"':''}>${snip}</small></a>`});
+  }
+  out.sort((x,y)=>y.c-x.c);
+  hitsEl.innerHTML=top+`<div class="hits-n">${out.length?out.length+' halaman memuat kata ini'+(out.length>100?' (100 teratas)':''):(top?'':'Tidak ditemukan. Ketik tanpa harakat, misalnya "النيات".')}</div>`+out.slice(0,100).map(o=>o.html).join('');
+}
+
+// ---------- keyboard & geser ----------
+document.addEventListener('keydown',e=>{if(/INPUT|TEXTAREA/.test(document.activeElement.tagName))return;if(e.key==='ArrowRight')go(cur+1);else if(e.key==='ArrowLeft')go(cur-1);else if(e.key==='Escape')closeNav();});
+let sx=0,sy=0,st=0,ok=false;
+document.addEventListener('touchstart',e=>{if(e.touches.length!==1||document.body.classList.contains('nav-open')||e.target.closest('.tbl,.nav,input,.viz-x')){ok=false;return;}sx=e.touches[0].clientX;sy=e.touches[0].clientY;st=Date.now();ok=true;},{passive:true});
+document.addEventListener('touchend',e=>{if(!ok)return;ok=false;const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy,dt=Date.now()-st;if(Math.abs(dx)>80&&Math.abs(dx)>Math.abs(dy)*2&&dt<600){go(dx<0?cur+1:cur-1);}},{passive:true});
+
+// ---------- kembali ke Maktabah ----------
+(function(){
+  let show=false;
+  try{if(window.parent!==window&&typeof window.parent.closeReader==='function')show=true;}catch(e){}
+  if(window.parent===window&&location.protocol==='file:')show=true;
+  const b=$('homeBtn');b.hidden=!show;
+  b.onclick=e=>{e.preventDefault();try{if(window.parent!==window&&typeof window.parent.closeReader==='function'){window.parent.closeReader();return;}}catch(err){}location.href='index.html';};
+})();
+
+// ---------- mulai ----------
+function fromHash(){const h=decodeURIComponent((location.hash||'').slice(1));if(h in KEYIDX)return KEYIDX[h];return -1;}
+let start=fromHash();
+if(start<0){const p=store.get(SK+'pos');start=(p&&p in KEYIDX)?KEYIDX[p]:0;}
+render(start,false);
+window.addEventListener('hashchange',()=>{const i=fromHash();if(i>=0&&i!==cur)render(i,false);});
+})();
+</script>
+</body></html>
