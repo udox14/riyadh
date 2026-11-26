@@ -167,8 +167,8 @@ function render(i,push){
     h=`<article class="page"><p class="eyebrow">Kitab</p><p class="babttl" lang="ar">${esc(k.ar)}</p><h1 class="ttl">${esc(k.id)}</h1>`+
       `<div class="stat"><span>${bl.length} bab</span><span>${nh} hadits</span><span>Bab ${DATA[bl[0]].bn}${bl.length>1?'–'+DATA[bl[bl.length-1]].bn:''}</span></div>`+
       (u.kt===1?`<div class="pending">${clock}<div>Imam an-Nawawi tidak memberi judul kitab untuk bab-bab awal ini; judul <b>al-Muqaddimat</b> dipakai para pensyarah. Penomoran kitab dalam cetakan al-Fahl dimulai dari Kitab al-Adab.</div></div>`:'')+
-      `<section class="part"><h2 class="part-h">Daftar bab</h2><ul class="secgrid babs">`+
-      bl.map(bi=>{const b=DATA[bi];return `<li><a href="#b${b.bn}" data-key="b${b.bn}"><span class="sl">${b.bn}</span>${b.id?`<span>${esc(b.id)}</span>`:''}<span class="tar" lang="ar">${esc(b.ar)}</span><span class="cnt">${nH(b)||'–'}</span></a></li>`;}).join('')+`</ul></section></article>`;
+      `<section class="part"><h2 class="part-h">Daftar bab</h2><ul class="secgrid babs kitbabs">`+
+      bl.map(bi=>{const b=DATA[bi],nhb=nH(b);return `<li><a href="#b${b.bn}" data-key="b${b.bn}"><div class="bab-meta"><span class="bab-num">Bab ${b.bn}</span><span class="bab-cnt">${nhb?nhb+' hadits':'Ayat saja'}</span></div><div class="bab-ar" lang="ar" dir="rtl">${esc(b.ar)}</div>${b.id?`<div class="bab-id">${esc(b.id)}</div>`:''}</a></li>`;}).join('')+`</ul></section></article>`;
     crumb=`<b>${esc(k.id)}</b>`;
   }else if(u.t==='b'){
     const b=DATA[u.b];

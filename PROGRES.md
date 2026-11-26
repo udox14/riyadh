@@ -1,7 +1,7 @@
 # PROGRES Syarah Riyadhus Shalihin
 
 <!-- OTOMATIS:MULAI -->
-_Diperbarui build.py, 2026-11-27 06:43 WIB_
+_Diperbarui build.py, 2026-11-27 06:56 WIB_
 
 - Bab bersyarah: **372 / 372**
 - Hadits berterjemah: **1896 / 1896** · bersyarah: **1896**

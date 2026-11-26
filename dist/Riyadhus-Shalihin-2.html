@@ -407,6 +407,15 @@ details.mfd .tbl{margin:0;border:0;border-top:1px solid var(--line);border-radiu
 .secgrid.babs{grid-template-columns:1fr}
 .secgrid.babs a{align-items:center}
 .secgrid.babs .tar{font-size:18px}
+.secgrid.kitbabs{gap:10px}
+.secgrid.kitbabs a{display:flex;flex-direction:column;align-items:stretch;gap:6px;padding:14px 18px;border-radius:12px;border-left:3px solid var(--line);transition:border-color .18s ease,box-shadow .18s ease,transform .18s ease}
+.secgrid.kitbabs a:hover{border-color:var(--accent);border-left-color:var(--accent);box-shadow:0 4px 14px color-mix(in srgb,var(--accent) 12%,transparent);transform:translateY(-1px)}
+.secgrid.kitbabs .bab-meta{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.secgrid.kitbabs .bab-num{font-family:var(--f-ui);font-size:11.5px;font-weight:700;letter-spacing:.03em;padding:2px 10px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-variant-numeric:tabular-nums}
+.secgrid.kitbabs .bab-cnt{font-family:var(--f-ui);font-size:11.5px;font-weight:600;padding:2px 10px;border-radius:999px;background:var(--surface-2);color:var(--ink-3);font-variant-numeric:tabular-nums}
+.secgrid.kitbabs .bab-ar{font-family:var(--f-ar);font-size:calc(1.32rem * var(--scale));line-height:1.75;direction:rtl;text-align:right;color:var(--ink);font-weight:700;margin-top:2px;transition:color .18s ease}
+.secgrid.kitbabs a:hover .bab-ar{color:var(--accent)}
+.secgrid.kitbabs .bab-id{font-family:var(--f-ui);font-size:14.5px;line-height:1.5;color:var(--ink-2);font-weight:500;padding-top:8px;border-top:1px dashed var(--line)}
 .secgrid .cnt{flex:none;font-size:12px;color:var(--ink-3)}
 .stat{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
 .stat span{font-family:var(--f-ui);font-size:12.5px;padding:4px 10px;border-radius:999px;background:var(--surface-2);color:var(--ink-2)}
@@ -416,6 +425,9 @@ details.mfd .tbl{margin:0;border:0;border-top:1px solid var(--line);border-radiu
   .matan.hadits p{font-size:calc(1.4rem * var(--scale))}
   .matan p.sy{font-size:calc(1.26rem * var(--scale))}
   .babttl{font-size:calc(1.6rem * var(--scale))}
+  .secgrid.kitbabs a{padding:12px 14px}
+  .secgrid.kitbabs .bab-ar{font-size:calc(1.18rem * var(--scale));line-height:1.7}
+  .secgrid.kitbabs .bab-id{font-size:13.5px}
 }
 
 </style>
@@ -581,8 +593,8 @@ function render(i,push){
     h=`<article class="page"><p class="eyebrow">Kitab</p><p class="babttl" lang="ar">${esc(k.ar)}</p><h1 class="ttl">${esc(k.id)}</h1>`+
       `<div class="stat"><span>${bl.length} bab</span><span>${nh} hadits</span><span>Bab ${DATA[bl[0]].bn}${bl.length>1?'–'+DATA[bl[bl.length-1]].bn:''}</span></div>`+
       (u.kt===1?`<div class="pending">${clock}<div>Imam an-Nawawi tidak memberi judul kitab untuk bab-bab awal ini; judul <b>al-Muqaddimat</b> dipakai para pensyarah. Penomoran kitab dalam cetakan al-Fahl dimulai dari Kitab al-Adab.</div></div>`:'')+
-      `<section class="part"><h2 class="part-h">Daftar bab</h2><ul class="secgrid babs">`+
-      bl.map(bi=>{const b=DATA[bi];return `<li><a href="#b${b.bn}" data-key="b${b.bn}"><span class="sl">${b.bn}</span>${b.id?`<span>${esc(b.id)}</span>`:''}<span class="tar" lang="ar">${esc(b.ar)}</span><span class="cnt">${nH(b)||'–'}</span></a></li>`;}).join('')+`</ul></section></article>`;
+      `<section class="part"><h2 class="part-h">Daftar bab</h2><ul class="secgrid babs kitbabs">`+
+      bl.map(bi=>{const b=DATA[bi],nhb=nH(b);return `<li><a href="#b${b.bn}" data-key="b${b.bn}"><div class="bab-meta"><span class="bab-num">Bab ${b.bn}</span><span class="bab-cnt">${nhb?nhb+' hadits':'Ayat saja'}</span></div><div class="bab-ar" lang="ar" dir="rtl">${esc(b.ar)}</div>${b.id?`<div class="bab-id">${esc(b.id)}</div>`:''}</a></li>`;}).join('')+`</ul></section></article>`;
     crumb=`<b>${esc(k.id)}</b>`;
   }else if(u.t==='b'){
     const b=DATA[u.b];
