@@ -24,7 +24,7 @@ Memeriksa (dikalibrasi terhadap syarah/bab-001.json & PANDUAN.md §4–§8):
   5. Kebersihan: unit lengkap sesuai data.json, 0 mt, 0 <a href="#, 0 'tobat',
      .peta native (<b>+<small>), tag HTML seimbang, dan deteksi anti-boilerplate
 """
-import json, pathlib, re, sys, xml.etree.ElementTree as ET
+import json, math, pathlib, re, sys, xml.etree.ElementTree as ET
 sys.stdout.reconfigure(encoding="utf-8")
 
 ROOT = pathlib.Path(__file__).resolve().parent
@@ -154,20 +154,54 @@ def find_quote_pages(q, cite_pgs):
             break
     return True, sorted(pages, key=lambda x: tuple(int(z) for z in x.split("/")))
 
-def est_width(text, cls):
+AR_DIAC = re.compile(r'[\u064B-\u065F\u0670\u0640]')
+
+def svg_text_box(text, cls, el, tx, ty, anchor):
     t = re.sub(r"<[^>]+>", "", text or "")
-    c = cls or ""
-    if "sv-t" in c: px = 8.4
-    elif "sv-cn" in c: px = 7.4
-    elif "sv-s" in c: px = 7.2
-    elif "sv-n" in c: px = 6.9
-    else: px = 7.2
+    st_low = (el.attrib.get("style", "") or "").lower()
+    m_fs = re.search(r"font-size\s*:\s*([\d.]+)\s*px", st_low)
+    c = (cls or "").split()
+    if m_fs:
+        fs = float(m_fs.group(1))
+    elif "sv-ar" in c:
+        fs = 22.0
+    elif "sv-t" in c:
+        fs = 15.5
+    elif "sv-lb" in c:
+        fs = 15.0
+    elif "sv-s" in c or "sv-cn" in c:
+        fs = 13.0
+    elif "sv-n" in c:
+        fs = 12.0
+    else:
+        fs = 13.0
+    is_ar = ("sv-ar" in c)
+    is_bold = ("sv-t" in c) or (el.attrib.get("font-weight", "") in ("600", "700", "bold"))
+    ls_zero = bool(re.search(r"letter-spacing\s*:\s*0", st_low))
+    extra_ls = (0.0 if ls_zero else 0.06 * fs) if "sv-n" in c else 0.0
+    base = AR_DIAC.sub("", t)
     w = 0.0
-    for ch in t:
-        if ch in " ilI1.,:;!'|()[]·": w += px * 0.55
-        elif ch in "MWm@": w += px * 1.35
-        else: w += px
-    return w
+    if is_ar:
+        for ch in base:
+            if ch == " ": w += fs * 0.28
+            elif ch in "اأإآرذدزوةء": w += fs * 0.38
+            elif ch in "سشصض": w += fs * 0.70
+            elif "\u0600" <= ch <= "\u06FF": w += fs * 0.50
+            else: w += fs * 0.55
+    else:
+        scale = 0.57 * (1.06 if is_bold else 1.0)
+        for ch in base:
+            if ch in " ilI1.,:;!'|()[]·-–": w += fs * scale * 0.52 + extra_ls
+            elif ch in "MWm@—": w += fs * scale * 1.42 + extra_ls
+            elif ch == "ﷺ": w += fs * 1.15
+            elif "\u0600" <= ch <= "\u06FF": w += fs * 0.52
+            else: w += fs * scale + extra_ls
+    if anchor == "middle": x0, x1 = tx - w / 2.0, tx + w / 2.0
+    elif anchor == "end": x0, x1 = tx - w, tx
+    else: x0, x1 = tx, tx + w
+    asc = fs * (0.76 if not is_ar else 0.72)
+    desc = fs * (0.24 if not is_ar else 0.30)
+    return x0, x1, ty - asc, ty + desc, w, fs
 
 def main():
     if len(sys.argv) < 2:
@@ -293,8 +327,8 @@ def main():
                     except Exception as e:
                         print(f"  [SVG XML ERR] bab-{bn:03d} {uk}.{fk}: {e}"); bi += 1; continue
                     vb = [float(x) for x in root.attrib.get("viewBox", "0 0 540 200").split()]
-                    vb_w, vb_h = vb[2], vb[3]
-                    rects, texts, issues_ref = [], [], [0]
+                    vb_x, vb_y, vb_w, vb_h = vb[0], vb[1], vb[2], vb[3]
+                    shapes, texts, issues_ref = [], [], [0]
                     def walk(el, dx=0.0, dy=0.0):
                         tr = el.attrib.get("transform", "")
                         m_tr = re.search(r"translate\(\s*([-\d.]+)\s*[,\s]\s*([-\d.]+)\s*\)", tr)
@@ -311,30 +345,87 @@ def main():
                             if not cs and "fill" not in el.attrib and "stroke" not in el.attrib and "style" not in el.attrib:
                                 print(f"  [SHAPE NO STYLE] bab-{bn:03d} {uk}.{fk}"); issues_ref[0] += 1
                         if tag == "rect":
-                            rects.append((float(el.attrib.get("x", 0)) + dx, float(el.attrib.get("y", 0)) + dy,
-                                          float(el.attrib.get("width", 0)), float(el.attrib.get("height", 0))))
+                            rw, rh = float(el.attrib.get("width", 0)), float(el.attrib.get("height", 0))
+                            rx, ry = float(el.attrib.get("x", 0)) + dx, float(el.attrib.get("y", 0)) + dy
+                            if rw >= 16 and rh >= 12 and not (rw >= vb_w * 0.96 and rh >= vb_h * 0.90):
+                                shapes.append(("rect", rw * rh, (rx, ry, rw, rh)))
+                        elif tag == "circle":
+                            cr = float(el.attrib.get("r", 0))
+                            if cr >= 12:
+                                shapes.append(("circle", math.pi * cr * cr,
+                                               (float(el.attrib.get("cx", 0)) + dx, float(el.attrib.get("cy", 0)) + dy, cr)))
+                        elif tag == "ellipse":
+                            erx, ery = float(el.attrib.get("rx", 0)), float(el.attrib.get("ry", 0))
+                            if erx >= 16 and ery >= 10:
+                                shapes.append(("ellipse", math.pi * erx * ery,
+                                               (float(el.attrib.get("cx", 0)) + dx, float(el.attrib.get("cy", 0)) + dy, erx, ery)))
                         elif tag == "text":
                             if not (set(cs) & TEXT_FILL_OK) and "fill" not in el.attrib and "style" not in el.attrib:
                                 print(f"  [TEXT NO FILL] bab-{bn:03d} {uk}.{fk}"); issues_ref[0] += 1
-                            texts.append(("".join(el.itertext()), el.attrib.get("class", ""),
-                                          float(el.attrib.get("x", 0)) + dx, float(el.attrib.get("y", 0)) + dy,
-                                          el.attrib.get("text-anchor", "start")))
+                            t_str = "".join(el.itertext()).strip()
+                            if t_str:
+                                texts.append((t_str, el.attrib.get("class", ""), el,
+                                              float(el.attrib.get("x", 0)) + dx, float(el.attrib.get("y", 0)) + dy,
+                                              el.attrib.get("text-anchor", "start")))
                         for ch in el:
                             walk(ch, dx, dy)
                     walk(root)
                     bi += issues_ref[0]
-                    for txt, cls, tx, ty, anchor in texts:
-                        ew = est_width(txt, cls)
-                        if anchor == "middle": x0, x1 = tx - ew/2, tx + ew/2
-                        elif anchor == "end": x0, x1 = tx - ew, tx
-                        else: x0, x1 = tx, tx + ew
-                        if x0 < 0 or x1 > vb_w + 1 or ty > vb_h + 1:
-                            print(f"  [TEXT OOB] bab-{bn:03d} {uk}.{fk}: '{txt}' [{x0:.0f}..{x1:.0f}] vb=({vb_w:.0f},{vb_h:.0f})"); bi += 1
-                        enc = [r for r in rects if r[0] <= tx <= r[0]+r[2] and r[1] <= ty <= r[1]+r[3]]
-                        if enc:
-                            enc.sort(key=lambda r: r[2]*r[3])
-                            if ew > enc[0][2] - 6:
-                                print(f"  [TEXT OVERFLOW] bab-{bn:03d} {uk}.{fk}: '{txt}' est={ew:.0f} > box={enc[0][2]:.0f}"); bi += 1
+                    tboxes = []
+                    for txt, cls, tel, tx, ty, anchor in texts:
+                        x0, x1, y0, y1, ew, fs = svg_text_box(txt, cls, tel, tx, ty, anchor)
+                        tboxes.append((txt, x0, x1, y0, y1))
+                        if x0 < vb_x + 1 or x1 > vb_x + vb_w - 1 or y0 < vb_y - 2 or y1 > vb_y + vb_h + 2:
+                            print(f"  [TEXT OOB] bab-{bn:03d} {uk}.{fk}: '{txt}' x=[{x0:.0f}..{x1:.0f}] y=[{y0:.0f}..{y1:.0f}] vb=({vb_w:.0f},{vb_h:.0f})"); bi += 1
+                        enclosing = []
+                        for skind, sarea, sparams in shapes:
+                            if skind == "rect":
+                                rx, ry, rw, rh = sparams
+                                if rx <= tx <= rx + rw and ry <= ty <= ry + rh:
+                                    enclosing.append((sarea, skind, sparams))
+                            elif skind == "circle":
+                                cx, cy, cr = sparams
+                                if (tx - cx) ** 2 + (ty - cy) ** 2 <= cr ** 2:
+                                    enclosing.append((sarea, skind, sparams))
+                            elif skind == "ellipse":
+                                cx, cy, erx, ery = sparams
+                                if ((tx - cx) / erx) ** 2 + ((ty - cy) / ery) ** 2 <= 1.0:
+                                    enclosing.append((sarea, skind, sparams))
+                        if enclosing:
+                            enclosing.sort(key=lambda x: x[0])
+                            _, skind, sparams = enclosing[0]
+                            ym = (y0 + y1) / 2.0
+                            if skind == "rect":
+                                rx, ry, rw, rh = sparams
+                                if x0 < rx + 3 or x1 > rx + rw - 3:
+                                    print(f"  [RECT OVERFLOW] bab-{bn:03d} {uk}.{fk}: '{txt}' est={ew:.0f} rect=[{rx:.0f}..{rx+rw:.0f}]"); bi += 1
+                            elif skind == "circle":
+                                cx, cy, cr = sparams
+                                dmax = max(
+                                    math.hypot(x0 - cx, ym - cy), math.hypot(x1 - cx, ym - cy),
+                                    math.hypot(x0 - cx, y1 - cy), math.hypot(x1 - cx, y1 - cy),
+                                    math.hypot(x0 - cx, y0 - cy), math.hypot(x1 - cx, y0 - cy),
+                                )
+                                if dmax > cr - 2:
+                                    print(f"  [CIRCLE OVERFLOW] bab-{bn:03d} {uk}.{fk}: '{txt}' dmax={dmax:.0f} > r={cr:.0f}"); bi += 1
+                            elif skind == "ellipse":
+                                cx, cy, erx, ery = sparams
+                                nmax = max(
+                                    ((x0 - cx) / erx) ** 2 + ((ym - cy) / ery) ** 2,
+                                    ((x1 - cx) / erx) ** 2 + ((ym - cy) / ery) ** 2,
+                                    ((x0 - cx) / erx) ** 2 + ((y1 - cy) / ery) ** 2,
+                                    ((x1 - cx) / erx) ** 2 + ((y1 - cy) / ery) ** 2,
+                                    ((x0 - cx) / erx) ** 2 + ((y0 - cy) / ery) ** 2,
+                                    ((x1 - cx) / erx) ** 2 + ((y0 - cy) / ery) ** 2,
+                                )
+                                if nmax > 0.96:
+                                    print(f"  [ELLIPSE OVERFLOW] bab-{bn:03d} {uk}.{fk}: '{txt}' norm={math.sqrt(nmax):.2f} ellipse=({erx:.0f}x{ery:.0f})"); bi += 1
+                    for ti1 in range(len(tboxes)):
+                        t1, ax0, ax1, ay0, ay1 = tboxes[ti1]
+                        for ti2 in range(ti1 + 1, len(tboxes)):
+                            t2, bx0, bx1, by0, by1 = tboxes[ti2]
+                            if (min(ax1, bx1) - max(ax0, bx0)) > 3 and (min(ay1, by1) - max(ay0, by0)) > 3:
+                                print(f"  [TEXT OVERLAP] bab-{bn:03d} {uk}.{fk}: '{t1}' x '{t2}'"); bi += 1
 
             if not uk.startswith("h"):
                 continue
