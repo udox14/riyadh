@@ -65,8 +65,8 @@ for g in DATA_J["DATA"]:
     if not bn:
         continue
     EXPECTED_UNITS[bn] = [
-        f"h{s['no']}" if s["t"] == "h" else f"a{bn}"
-        for s in g["s"] if s["t"] in ("h", "a")
+        f"h{s['no']}" if s["t"] == "h" else (f"a{bn}" if s["t"] == "a" else "penutup")
+        for s in g["s"] if s["t"] in ("h", "a", "x")
     ]
 
 # Muat seluruh Dalil al-Falihin (Juz 1–8) & indeks per hadits
